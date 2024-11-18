@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.2">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <stringProp name="LoopController.loops">3800</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.delayedStart">false</boolProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <JDBCDataSource guiclass="TestBeanGUI" testclass="JDBCDataSource" testname="conexionOracle" enabled="true">
+          <boolProp name="autocommit">true</boolProp>
+          <stringProp name="checkQuery"></stringProp>
+          <stringProp name="connectionAge">5000</stringProp>
+          <stringProp name="connectionProperties"></stringProp>
+          <stringProp name="dataSource">myDbConnection</stringProp>
+          <stringProp name="dbUrl">jdbc:oracle:thin:@flypass-cer.ch06w7as3fxd.us-east-1.rds.amazonaws.com:1521/orcl </stringProp>
+          <stringProp name="driver">oracle.jdbc.OracleDriver</stringProp>
+          <stringProp name="initQuery"></stringProp>
+          <boolProp name="keepAlive">true</boolProp>
+          <stringProp name="password">CFN3jek.wqe.jdq-rvz </stringProp>
+          <stringProp name="poolMax">0</stringProp>
+          <boolProp name="preinit">false</boolProp>
+          <stringProp name="timeout">10000</stringProp>
+          <stringProp name="transactionIsolation">DEFAULT</stringProp>
+          <stringProp name="trimInterval">60000</stringProp>
+          <stringProp name="username">ALEJANDRAOSPINA</stringProp>
+          <stringProp name="TestPlan.comments">conexion con oracle</stringProp>
+        </JDBCDataSource>
+        <hashTree/>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="insertarReferencia" enabled="true">
+          <stringProp name="dataSource">myDbConnection</stringProp>
+          <stringProp name="query">INSERT INTO tfps_mvtos_sinc_billetera (
+    cdmvto_sinc_billetera,
+    cdusuario,
+    femvto,
+    cdnumero_transaccion,
+    vrmvto,
+    dsdescripcion_mvto,
+    cdtipo_mvto,
+    cdtipo_ajuste,
+    cdorigen_ajuste,
+    cdmvto_relacion,
+    cdusuario_ingresa,
+    feingresa,
+    femodifica,
+    cdmovimiento_referencia,
+    dsplaca,
+    cdpunto_atencion,
+    cdtipo_consumo,
+    vrajuste,
+    cdajuste
+) VALUES (
+    ${cdmvto_sinc_billetera},
+    ${cdusuario},
+    TO_DATE(&apos;${femvto}&apos;, &apos;YYYY-MM-DD&apos;),
+    &apos;${cdnumero_transaccion}&apos;,
+    ${vrmvto},
+    &apos;${dsdescripcion_mvto}&apos;,
+    ${cdtipo_mvto},
+    ${cdtipo_ajuste},
+    ${cdorigen_ajuste},
+    ${cdmvto_relacion},
+    ${cdusuario_ingresa},
+    TO_DATE(&apos;${feingresa}&apos;, &apos;YYYY-MM-DD&apos;),
+    ${femodifica},
+    ${cdmovimiento_referencia},
+    &apos;${dsplaca}&apos;,
+    ${cdpunto_atencion},
+    ${cdtipo_consumo},
+    ${vrajuste},
+    ${cdajuste}
+)
+</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="queryType">Update Statement</stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+          <stringProp name="resultSetMaxRows"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+        </JDBCSampler>
+        <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+            <stringProp name="delimiter">;</stringProp>
+            <stringProp name="fileEncoding">UTF-8</stringProp>
+            <stringProp name="filename">C:/Users/alejandra.ospina/Documents/GitHub/testing-performance-wallet-transaction-sincronizer/Diseño/Data/insertarReferencia.csv</stringProp>
+            <boolProp name="ignoreFirstLine">true</boolProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames">cdmvto_sinc_billetera,cdusuario,femvto,cdnumero_transaccion,vrmvto,dsdescripcion_mvto,cdtipo_mvto,cdtipo_ajuste,cdorigen_ajuste,cdmvto_relacion,cdusuario_ingresa,feingresa,femodifica,cdmovimiento_referencia,dsplaca,cdpunto_atencion,cdtipo_consumo,vrajuste,cdajuste</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <JDBCPostProcessor guiclass="TestBeanGUI" testclass="JDBCPostProcessor" testname="JDBC PostProcessor" enabled="true">
+            <stringProp name="dataSource">myDbConnection</stringProp>
+            <stringProp name="query"></stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="queryType">Update Statement</stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+          </JDBCPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="insertarConsumo" enabled="true">
+          <stringProp name="dataSource">myDbConnection</stringProp>
+          <stringProp name="query">INSERT INTO tfps_mvtos_sinc_billetera (
+    cdmvto_sinc_billetera,
+    cdusuario,
+    femvto,
+    cdnumero_transaccion,
+    vrmvto,
+    dsdescripcion_mvto,
+    cdtipo_mvto,
+    cdtipo_ajuste,
+    cdorigen_ajuste,
+    cdmvto_relacion,
+    cdusuario_ingresa,
+    feingresa,
+    femodifica,
+    cdmovimiento_referencia,
+    dsplaca,
+    cdpunto_atencion,
+    cdtipo_consumo,
+    vrajuste,
+    cdajuste
+) VALUES (
+    ${cdmvto_sinc_billeteraIC},
+    ${cdusuarioIC},
+    TO_DATE(&apos;${femvtoIC}&apos;, &apos;YYYY-MM-DD&apos;),
+    &apos;${cdnumero_transaccionIC}&apos;,
+    ${vrmvtoIC},
+    &apos;${dsdescripcion_mvtoIC}&apos;,
+    ${cdtipo_mvtoIC},
+    ${cdtipo_ajusteIC},
+    ${cdorigen_ajusteIC},
+    ${cdmvto_relacionIC},
+    ${cdusuario_ingresaIC},
+    TO_DATE(&apos;${feingresaIC}&apos;, &apos;YYYY-MM-DD&apos;),
+    ${femodificaIC},
+    ${cdmovimiento_referenciaIC},
+    &apos;${dsplacaIC}&apos;,
+    ${cdpunto_atencionIC},
+    ${cdtipo_consumoIC},
+    ${vrajusteIC},
+    ${cdajusteIC}
+)
+</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="queryType">Update Statement</stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+          <stringProp name="resultSetMaxRows"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+        </JDBCSampler>
+        <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+            <stringProp name="delimiter">;</stringProp>
+            <stringProp name="fileEncoding">UTF-8</stringProp>
+            <stringProp name="filename">C:/Users/alejandra.ospina/Documents/GitHub/testing-performance-wallet-transaction-sincronizer/Diseño/Data/insertarConsumo.csv</stringProp>
+            <boolProp name="ignoreFirstLine">true</boolProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames">cdmvto_sinc_billeteraIC,cdusuarioIC,femvtoIC,cdnumero_transaccionIC,vrmvtoIC,dsdescripcion_mvtoIC,cdtipo_mvtoIC,cdtipo_ajusteIC,cdorigen_ajusteIC,cdmvto_relacionIC,cdusuario_ingresaIC,feingresaIC,femodificaIC,cdmovimiento_referenciaIC,dsplacaIC,cdpunto_atencionIC,cdtipo_consumoIC,vrajusteIC,cdajusteIC</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <JDBCPostProcessor guiclass="TestBeanGUI" testclass="JDBCPostProcessor" testname="JDBC PostProcessor" enabled="true">
+            <stringProp name="dataSource">myDbConnection</stringProp>
+            <stringProp name="query"></stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="queryType">Update Statement</stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+          </JDBCPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="insertarAjusteDeConsumo" enabled="true">
+          <stringProp name="dataSource">myDbConnection</stringProp>
+          <stringProp name="query">INSERT INTO tfps_mvtos_sinc_billetera (
+    cdmvto_sinc_billetera,
+    cdusuario,
+    femvto,
+    cdnumero_transaccion,
+    vrmvto,
+    dsdescripcion_mvto,
+    cdtipo_mvto,
+    cdtipo_ajuste,
+    cdorigen_ajuste,
+    cdmvto_relacion,
+    cdusuario_ingresa,
+    feingresa,
+    femodifica,
+    cdmovimiento_referencia,
+    dsplaca,
+    cdpunto_atencion,
+    cdtipo_consumo,
+    vrajuste,
+    cdajuste
+) VALUES (
+    ${cdmvto_sinc_billeteraIAC},
+    ${cdusuarioIAC},
+    TO_DATE(&apos;${femvtoIAC}&apos;, &apos;YYYY-MM-DD&apos;),
+    &apos;${cdnumero_transaccionIAC}&apos;,
+    ${vrmvtoIAC},
+    &apos;${dsdescripcion_mvtoIAC}&apos;,
+    ${cdtipo_mvtoIAC},
+    ${cdtipo_ajusteIAC},
+    ${cdorigen_ajusteIAC},
+    ${cdmvto_relacionIAC},
+    ${cdusuario_ingresaIAC},
+    TO_DATE(&apos;${feingresaIAC}&apos;, &apos;YYYY-MM-DD&apos;),
+    ${femodificaIAC},
+    ${cdmovimiento_referenciaIAC},
+    &apos;${dsplacaIAC}&apos;,
+    ${cdpunto_atencionIAC},
+    ${cdtipo_consumoIAC},
+    ${vrajusteIAC},
+    ${cdajusteIAC}
+)
+</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="queryType">Update Statement</stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+          <stringProp name="resultSetMaxRows"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+        </JDBCSampler>
+        <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+            <stringProp name="delimiter">;</stringProp>
+            <stringProp name="fileEncoding">UTF-8</stringProp>
+            <stringProp name="filename">C:/Users/alejandra.ospina/Documents/GitHub/testing-performance-wallet-transaction-sincronizer/Diseño/Data/insertarAjusteDeConsumo.csv</stringProp>
+            <boolProp name="ignoreFirstLine">true</boolProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames">cdmvto_sinc_billeteraIAC,cdusuarioIAC,femvtoIAC,cdnumero_transaccionIAC,vrmvtoIAC,dsdescripcion_mvtoIAC,cdtipo_mvtoIAC,cdtipo_ajusteIAC,cdorigen_ajusteIAC,cdmvto_relacionIAC,cdusuario_ingresaIAC,feingresaIAC,femodificaIAC,cdmovimiento_referenciaIAC,dsplacaIAC,cdpunto_atencionIAC,cdtipo_consumoIAC,vrajusteIAC,cdajusteIAC</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <JDBCPostProcessor guiclass="TestBeanGUI" testclass="JDBCPostProcessor" testname="JDBC PostProcessor" enabled="true">
+            <stringProp name="dataSource">myDbConnection</stringProp>
+            <stringProp name="query"></stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="queryType">Update Statement</stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+          </JDBCPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="insertarRecarga" enabled="true">
+          <stringProp name="dataSource">myDbConnection</stringProp>
+          <stringProp name="query">INSERT INTO tfps_mvtos_sinc_billetera (
+    cdmvto_sinc_billetera,
+    cdusuario,
+    femvto,
+    cdnumero_transaccion,
+    vrmvto,
+    dsdescripcion_mvto,
+    cdtipo_mvto,
+    cdtipo_ajuste,
+    cdorigen_ajuste,
+    cdmvto_relacion,
+    cdusuario_ingresa,
+    feingresa,
+    femodifica,
+    cdmovimiento_referencia,
+    dsplaca,
+    cdpunto_atencion,
+    cdtipo_consumo,
+    vrajuste,
+    cdajuste
+) VALUES (
+    ${cdmvto_sinc_billeteraIR},
+    ${cdusuarioIR},
+    TO_DATE(&apos;${femvtoIR}&apos;, &apos;YYYY-MM-DD&apos;),
+    &apos;${cdnumero_transaccionIR}&apos;,
+    ${vrmvtoIR},
+    &apos;${dsdescripcion_mvtoIR}&apos;,
+    ${cdtipo_mvtoIR},
+    ${cdtipo_ajusteIR},
+    ${cdorigen_ajusteIR},
+    ${cdmvto_relacionIR},
+    ${cdusuario_ingresaIR},
+    TO_DATE(&apos;${feingresaIR}&apos;, &apos;YYYY-MM-DD&apos;),
+    ${femodificaIR},
+    ${cdmovimiento_referenciaIR},
+    &apos;${dsplacaIR}&apos;,
+    ${cdpunto_atencionIR},
+    ${cdtipo_consumoIR},
+    ${vrajusteIR},
+    ${cdajusteIR}
+)
+</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="queryType">Update Statement</stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+          <stringProp name="resultSetMaxRows"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+        </JDBCSampler>
+        <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+            <stringProp name="delimiter">;</stringProp>
+            <stringProp name="fileEncoding">UTF-8</stringProp>
+            <stringProp name="filename">C:/Users/alejandra.ospina/Documents/GitHub/testing-performance-wallet-transaction-sincronizer/Diseño/Data/insertarRecarga.csv</stringProp>
+            <boolProp name="ignoreFirstLine">true</boolProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames">cdmvto_sinc_billeteraIR,cdusuarioIR,femvtoIR,cdnumero_transaccionIR,vrmvtoIR,dsdescripcion_mvtoIR,cdtipo_mvtoIR,cdtipo_ajusteIR,cdorigen_ajusteIR,cdmvto_relacionIR,cdusuario_ingresaIR,feingresaIR,femodificaIR,cdmovimiento_referenciaIR,dsplacaIR,cdpunto_atencionIR,cdtipo_consumoIR,vrajusteIR,cdajusteIR</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <JDBCPostProcessor guiclass="TestBeanGUI" testclass="JDBCPostProcessor" testname="JDBC PostProcessor" enabled="true">
+            <stringProp name="dataSource">myDbConnection</stringProp>
+            <stringProp name="query"></stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="queryType">Update Statement</stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+          </JDBCPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="insertarAjusteDeRecarga" enabled="true">
+          <stringProp name="dataSource">myDbConnection</stringProp>
+          <stringProp name="query">INSERT INTO tfps_mvtos_sinc_billetera (
+    cdmvto_sinc_billetera,
+    cdusuario,
+    femvto,
+    cdnumero_transaccion,
+    vrmvto,
+    dsdescripcion_mvto,
+    cdtipo_mvto,
+    cdtipo_ajuste,
+    cdorigen_ajuste,
+    cdmvto_relacion,
+    cdusuario_ingresa,
+    feingresa,
+    femodifica,
+    cdmovimiento_referencia,
+    dsplaca,
+    cdpunto_atencion,
+    cdtipo_consumo,
+    vrajuste,
+    cdajuste
+) VALUES (
+    ${cdmvto_sinc_billeteraIAR},
+    ${cdusuarioIAR},
+    TO_DATE(&apos;${femvtoIAR}&apos;, &apos;YYYY-MM-DD&apos;),
+    &apos;${cdnumero_transaccionIAR}&apos;,
+    ${vrmvtoIAR},
+    &apos;${dsdescripcion_mvtoIAR}&apos;,
+    ${cdtipo_mvtoIAR},
+    ${cdtipo_ajusteIAR},
+    ${cdorigen_ajusteIAR},
+    ${cdmvto_relacionIAR},
+    ${cdusuario_ingresaIAR},
+    TO_DATE(&apos;${feingresaIAR}&apos;, &apos;YYYY-MM-DD&apos;),
+    ${femodificaIAR},
+    ${cdmovimiento_referenciaIAR},
+    &apos;${dsplacaIAR}&apos;,
+    ${cdpunto_atencionIAR},
+    ${cdtipo_consumoIAR},
+    ${vrajusteIAR},
+    ${cdajusteIAR}
+)
+</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="queryType">Update Statement</stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+          <stringProp name="resultSetMaxRows"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+        </JDBCSampler>
+        <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+            <stringProp name="delimiter">;</stringProp>
+            <stringProp name="fileEncoding">UTF-8</stringProp>
+            <stringProp name="filename">C:/Users/alejandra.ospina/Documents/GitHub/testing-performance-wallet-transaction-sincronizer/Diseño/Data/insertarAjusteDeRecarga.csv</stringProp>
+            <boolProp name="ignoreFirstLine">true</boolProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames">cdmvto_sinc_billeteraIAR,cdusuarioIAR,femvtoIAR,cdnumero_transaccionIAR,vrmvtoIAR,dsdescripcion_mvtoIAR,cdtipo_mvtoIAR,cdtipo_ajusteIAR,cdorigen_ajusteIAR,cdmvto_relacionIAR,cdusuario_ingresaIAR,feingresaIAR,femodificaIAR,cdmovimiento_referenciaIAR,dsplacaIAR,cdpunto_atencionIAR,cdtipo_consumoIAR,vrajusteIAR,cdajusteIAR</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <JDBCPostProcessor guiclass="TestBeanGUI" testclass="JDBCPostProcessor" testname="JDBC PostProcessor" enabled="true">
+            <stringProp name="dataSource">myDbConnection</stringProp>
+            <stringProp name="query"></stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="queryType">Update Statement</stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+          </JDBCPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="insertarComision" enabled="true">
+          <stringProp name="dataSource">myDbConnection</stringProp>
+          <stringProp name="query">INSERT INTO tfps_mvtos_sinc_billetera (
+    cdmvto_sinc_billetera,
+    cdusuario,
+    femvto,
+    cdnumero_transaccion,
+    vrmvto,
+    dsdescripcion_mvto,
+    cdtipo_mvto,
+    cdtipo_ajuste,
+    cdorigen_ajuste,
+    cdmvto_relacion,
+    cdusuario_ingresa,
+    feingresa,
+    femodifica,
+    cdmovimiento_referencia,
+    dsplaca,
+    cdpunto_atencion,
+    cdtipo_consumo,
+    vrajuste,
+    cdajuste
+) VALUES (
+    ${cdmvto_sinc_billeteraICO},
+    ${cdusuarioICO},
+    TO_DATE(&apos;${femvtoICO}&apos;, &apos;YYYY-MM-DD&apos;),
+    &apos;${cdnumero_transaccionICO}&apos;,
+    ${vrmvtoICO},
+    &apos;${dsdescripcion_mvtoICO}&apos;,
+    ${cdtipo_mvtoICO},
+    ${cdtipo_ajusteICO},
+    ${cdorigen_ajusteICO},
+    ${cdmvto_relacionICO},
+    ${cdusuario_ingresaICO},
+    TO_DATE(&apos;${feingresaICO}&apos;, &apos;YYYY-MM-DD&apos;),
+    ${femodificaICO},
+    ${cdmovimiento_referenciaICO},
+    &apos;${dsplacaICO}&apos;,
+    ${cdpunto_atencionICO},
+    ${cdtipo_consumoICO},
+    ${vrajusteICO},
+    ${cdajusteICO}
+)
+</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="queryType">Update Statement</stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+          <stringProp name="resultSetMaxRows"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+        </JDBCSampler>
+        <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+            <stringProp name="delimiter">;</stringProp>
+            <stringProp name="fileEncoding">UTF-8</stringProp>
+            <stringProp name="filename">C:/Users/alejandra.ospina/Documents/GitHub/testing-performance-wallet-transaction-sincronizer/Diseño/Data/insertarComision.csv</stringProp>
+            <boolProp name="ignoreFirstLine">true</boolProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames">cdmvto_sinc_billeteraICO,cdusuarioICO,femvtoICO,cdnumero_transaccionICO,vrmvtoICO,dsdescripcion_mvtoICO,cdtipo_mvtoICO,cdtipo_ajusteICO,cdorigen_ajusteICO,cdmvto_relacionICO,cdusuario_ingresaICO,feingresaICO,femodificaICO,cdmovimiento_referenciaICO,dsplacaICO,cdpunto_atencionICO,cdtipo_consumoICO,vrajusteICO,cdajusteICO</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <JDBCPostProcessor guiclass="TestBeanGUI" testclass="JDBCPostProcessor" testname="JDBC PostProcessor" enabled="true">
+            <stringProp name="dataSource">myDbConnection</stringProp>
+            <stringProp name="query"></stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="queryType">Update Statement</stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+          </JDBCPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="insertarAjusteDeComision" enabled="true">
+          <stringProp name="dataSource">myDbConnection</stringProp>
+          <stringProp name="query">INSERT INTO tfps_mvtos_sinc_billetera (
+    cdmvto_sinc_billetera,
+    cdusuario,
+    femvto,
+    cdnumero_transaccion,
+    vrmvto,
+    dsdescripcion_mvto,
+    cdtipo_mvto,
+    cdtipo_ajuste,
+    cdorigen_ajuste,
+    cdmvto_relacion,
+    cdusuario_ingresa,
+    feingresa,
+    femodifica,
+    cdmovimiento_referencia,
+    dsplaca,
+    cdpunto_atencion,
+    cdtipo_consumo,
+    vrajuste,
+    cdajuste
+) VALUES (
+    ${cdmvto_sinc_billeteraIACO},
+    ${cdusuarioIACO},
+    TO_DATE(&apos;${femvtoIACO}&apos;, &apos;YYYY-MM-DD&apos;),
+    &apos;${cdnumero_transaccionIACO}&apos;,
+    ${vrmvtoIACO},
+    &apos;${dsdescripcion_mvtoIACO}&apos;,
+    ${cdtipo_mvtoIACO},
+    ${cdtipo_ajusteIACO},
+    ${cdorigen_ajusteIACO},
+    ${cdmvto_relacionIACO},
+    ${cdusuario_ingresaIACO},
+    TO_DATE(&apos;${feingresaIACO}&apos;, &apos;YYYY-MM-DD&apos;),
+    ${femodificaIACO},
+    ${cdmovimiento_referenciaIACO},
+    &apos;${dsplacaIACO}&apos;,
+    ${cdpunto_atencionIACO},
+    ${cdtipo_consumoIACO},
+    ${vrajusteIACO},
+    ${cdajusteIACO}
+)
+</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
+          <stringProp name="queryTimeout"></stringProp>
+          <stringProp name="queryType">Update Statement</stringProp>
+          <stringProp name="resultSetHandler">Store as String</stringProp>
+          <stringProp name="resultSetMaxRows"></stringProp>
+          <stringProp name="resultVariable"></stringProp>
+          <stringProp name="variableNames"></stringProp>
+        </JDBCSampler>
+        <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+            <stringProp name="delimiter">;</stringProp>
+            <stringProp name="fileEncoding">UTF-8</stringProp>
+            <stringProp name="filename">C:/Users/alejandra.ospina/Documents/GitHub/testing-performance-wallet-transaction-sincronizer/Diseño/Data/insertarAjusteDeComision.csv</stringProp>
+            <boolProp name="ignoreFirstLine">true</boolProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="variableNames">cdmvto_sinc_billeteraIACO,cdusuarioIACO,femvtoIACO,cdnumero_transaccionIACO,vrmvtoIACO,dsdescripcion_mvtoIACO,cdtipo_mvtoIACO,cdtipo_ajusteIACO,cdorigen_ajusteIACO,cdmvto_relacionIACO,cdusuario_ingresaIACO,feingresaIACO,femodificaIACO,cdmovimiento_referenciaIACO,dsplacaIACO,cdpunto_atencionIACO,cdtipo_consumoIACO,vrajusteIACO,cdajusteIACO</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <JDBCPostProcessor guiclass="TestBeanGUI" testclass="JDBCPostProcessor" testname="JDBC PostProcessor" enabled="true">
+            <stringProp name="dataSource">myDbConnection</stringProp>
+            <stringProp name="query"></stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="queryType">Update Statement</stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+          </JDBCPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+          <stringProp name="ConstantTimer.delay">200</stringProp>
+        </ConstantTimer>
+        <hashTree/>
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+          <boolProp name="displayJMeterProperties">false</boolProp>
+          <boolProp name="displayJMeterVariables">true</boolProp>
+          <boolProp name="displaySystemProperties">false</boolProp>
+        </DebugSampler>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
